@@ -1,0 +1,44 @@
+name: Radar Bursátil Apertura-Media-Cierre
+
+on:
+  schedule:
+    # Horas en UTC (Lunes a Viernes):
+    # Asia (Tokio/HK): Apertura (00:30 UTC), Media (03:30 UTC), Cierre (06:30 UTC)
+    - cron: '30 0,3,6 * * 1-5'
+    # Europa (Madrid/Fráncfort/Londres): Apertura (08:15 UTC), Media (12:30 UTC), Cierre (16:35 UTC)
+    - cron: '15 8 * * 1-5'
+    - cron: '30 12 * * 1-5'
+    - cron: '35 16 * * 1-5'
+    # EE.UU. (NYSE/NASDAQ): Apertura (14:45 UTC), Media (18:00 UTC), Cierre (21:10 UTC)
+    - cron: '45 14 * * 1-5'
+    - cron: '0 18 * * 1-5'
+    - cron: '10 21 * * 1-5'
+  workflow_dispatch:  # Permite lanzarlo manualmente con un clic desde GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar-ranking:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar escáner por regiones
+        run: python scanner.py
+
+      - name: Guardar resultados en el repositorio
+        run: |
+          git config --local user.email "bot@radar-inversion.local"
+          git config --local user.name "Radar Bursátil Bot"
+          git add ranking_regiones.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Actualización automática de sesión" && git push)
