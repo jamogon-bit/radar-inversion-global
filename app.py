@@ -6,7 +6,6 @@ from scanner import ejecutar_rastreo_global
 
 st.set_page_config(page_title="Radar Global de Inversión", page_icon="🌍", layout="wide")
 
-# Sufijos de bolsa para construir enlaces exactos en Yahoo! Finance
 SUFIJOS_YAHOO = {
     "BME": ".MC",       # España (Madrid)
     "LSE": ".L",        # Reino Unido (Londres)
@@ -23,13 +22,11 @@ def generar_url_yahoo(ticker: str, bolsa: str, pais: str) -> str:
     ticker_limpio = str(ticker).strip()
     bolsa_upper = str(bolsa).upper()
 
-    # Ajuste específico para Ámsterdam vs París en Euronext
     if bolsa_upper == "EURONEXT" and pais == "Países Bajos":
         sufijo = ".AS"
     else:
         sufijo = SUFIJOS_YAHOO.get(bolsa_upper, "")
 
-    # En Hong Kong Yahoo Finance usa 4 dígitos (ej. 0700.HK)
     if sufijo == ".HK" and ticker_limpio.isdigit():
         ticker_limpio = ticker_limpio.zfill(4)
 
@@ -48,7 +45,7 @@ col_info, col_btn = st.columns([4, 1])
 with col_info:
     st.caption(
         f"⏱️ Último barrido automático: **{datos['ultima_actualizacion_utc']}** | "
-        "Pulsa sobre cualquier empresa o enlace para ver su gráfico y balances en Yahoo! Finance"
+        "Pulsa sobre cualquier ficha para abrir gráficos y estados financieros en Yahoo! Finance"
     )
 with col_btn:
     if st.button("🔄 Escanear ahora", use_container_width=True):
@@ -58,7 +55,7 @@ with col_btn:
 
 st.divider()
 
-# Tarjetas con la #1 de cada región (con enlace directo)
+# Tarjetas con la #1 de cada región
 st.subheader("🎯 Líder Actual por Región")
 cols = st.columns(3)
 for idx, region in enumerate(["América", "Europa", "Asia"]):
@@ -72,14 +69,18 @@ for idx, region in enumerate(["América", "Europa", "Asia"]):
                 value=f"{top1['Precio']} {top1['Divisa']}",
                 delta=f"Div: {top1['Div (%)']}% | PER: {top1['PER']}x",
             )
-            st.markdown(f"📈 [Ver gráfico y cuentas de {top1['Ticker']} en Yahoo! Finance]({url_top1})")
+            min_52 = top1.get("Mín 52s", "N/D")
+            max_52 = top1.get("Máx 52s", "N/D")
+            sobre_min = top1.get("Sobre Mín (%)", "N/D")
+            st.caption(f"📊 Rango 52s: {min_52} – {max_52} (+{sobre_min}% sobre mínimo anual)")
             st.caption(f"📍 {top1['País']} ({top1['Bolsa']}) · ROE: {top1['ROE (%)']}% · Deuda: {top1['Deuda/Patrim.']}x")
+            st.markdown(f"📈 [Ver gráfico y cuentas de {top1['Ticker']} en Yahoo! Finance]({url_top1})")
         else:
             st.warning(f"Sin candidatas en {region} hoy")
 
 st.divider()
 
-# Pestañas detalladas con el Top 5 de cada región y columna clicable
+# Pestañas detalladas con el Top 5 de cada región
 tab_am, tab_eu, tab_as = st.tabs(["🇺🇸 América (Top 5)", "🇪🇺 Europa (Top 5)", "🇯🇵 Asia (Top 5)"])
 
 for tab, region in zip([tab_am, tab_eu, tab_as], ["América", "Europa", "Asia"]):
@@ -91,9 +92,12 @@ for tab, region in zip([tab_am, tab_eu, tab_as], ["América", "Europa", "Asia"])
                 lambda r: generar_url_yahoo(r["Ticker"], r["Bolsa"], r["País"]), axis=1
             )
 
-            # Reordenar para poner el enlace junto al nombre de la empresa
             columnas_ordenadas = ["Ficha Web"] + [c for c in df_reg.columns if c != "Ficha Web"]
             df_reg = df_reg[columnas_ordenadas]
+
+            # Convertir Rango 52s (%) a numérico para mostrar barra visual
+            if "Rango 52s (%)" in df_reg.columns:
+                df_reg["Rango 52s (%)"] = pd.to_numeric(df_reg["Rango 52s (%)"], errors="coerce")
 
             st.dataframe(
                 df_reg,
@@ -104,7 +108,14 @@ for tab, region in zip([tab_am, tab_eu, tab_as], ["América", "Europa", "Asia"])
                         "Análisis",
                         help="Abrir cotización, gráficos y estados financieros en Yahoo! Finance",
                         display_text="🔎 Ver ficha",
-                    )
+                    ),
+                    "Rango 52s (%)": st.column_config.ProgressColumn(
+                        "Posición 52s",
+                        help="0% = en mínimos de 52 semanas | 100% = en máximos de 52 semanas",
+                        format="%.0f%%",
+                        min_value=0,
+                        max_value=100,
+                    ),
                 },
             )
         else:
