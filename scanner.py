@@ -31,7 +31,8 @@ def rastrear_region(mercados: dict) -> list:
                     "name", "description", "exchange", "sector", "close", "currency",
                     "market_cap_basic", "price_earnings_ttm", "return_on_equity",
                     "return_on_assets", "debt_to_equity", "dividends_yield_current",
-                    "dividend_yield_recent", "dividend_payout_ratio_ttm"
+                    "dividend_yield_recent", "dividend_payout_ratio_ttm",
+                    "price_52_week_low", "price_52_week_high"
                 )
                 .where(Column("type") == "stock")
                 .order_by("market_cap_basic", ascending=False)
@@ -70,6 +71,13 @@ def rastrear_region(mercados: dict) -> list:
     if df.empty:
         return []
 
+    # Cálculo de posición en rango de 52 semanas (0% = en mínimos anuales, 100% = en máximos)
+    min_52 = pd.to_numeric(df["price_52_week_low"], errors="coerce")
+    max_52 = pd.to_numeric(df["price_52_week_high"], errors="coerce")
+    rango = max_52 - min_52
+    df["Posicion_52s_%"] = (((df["close"] - min_52) / rango) * 100).where(rango > 0, None)
+    df["Dist_Min_52s_%"] = (((df["close"] - min_52) / min_52) * 100).where(min_52 > 0, None)
+
     # Ranking relativo tipo Fórmula Mágica + Dividendo
     df["Score"] = (
         df["return_on_assets"].rank(ascending=False)
@@ -87,6 +95,10 @@ def rastrear_region(mercados: dict) -> list:
         "sector": "Sector",
         "close": "Precio",
         "currency": "Divisa",
+        "price_52_week_low": "Mín 52s",
+        "price_52_week_high": "Máx 52s",
+        "Posicion_52s_%": "Rango 52s (%)",
+        "Dist_Min_52s_%": "Sobre Mín (%)",
         "price_earnings_ttm": "PER",
         "Dividendo_%": "Div (%)",
         "dividend_payout_ratio_ttm": "Pay-Out (%)",
