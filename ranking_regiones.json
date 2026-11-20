@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion_utc": "2026-11-20 20:36 UTC",
+  "ultima_actualizacion_utc": "2026-11-20 21:58 UTC",
   "regiones": {
     "América": [
       {
@@ -12,8 +12,8 @@
         "Divisa": "USD",
         "Mín 52s": 34.0,
         "Máx 52s": 64.75,
-        "Rango 52s (%)": 12.22,
-        "Sobre Mín (%)": 11.05,
+        "Rango 52s (%)": 12.21,
+        "Sobre Mín (%)": 11.04,
         "PER": 9.8,
         "Div (%)": 4.41,
         "Pay-Out (%)": 45.87,
@@ -65,13 +65,13 @@
         "País": "EE.UU.",
         "Bolsa": "NYSE",
         "Sector": "Health Technology",
-        "Precio": 59.24,
+        "Precio": 58.83,
         "Divisa": "USD",
         "Mín 52s": 47.58,
         "Máx 52s": 68.64,
-        "Rango 52s (%)": 55.4,
-        "Sobre Mín (%)": 24.53,
-        "PER": 13.13,
+        "Rango 52s (%)": 53.43,
+        "Sobre Mín (%)": 23.66,
+        "PER": 13.04,
         "Div (%)": 4.32,
         "Pay-Out (%)": 55.84,
         "ROE (%)": 44.06,
