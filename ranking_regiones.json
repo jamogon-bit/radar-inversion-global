@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion_utc": "2026-11-20 21:58 UTC",
+  "ultima_actualizacion_utc": "2026-11-20 22:48 UTC",
   "regiones": {
     "América": [
       {
@@ -138,6 +138,25 @@
         "Deuda/Patrim.": 0.0
       },
       {
+        "Ticker": "FERGR",
+        "Empresa": "Ferrari Group PLC",
+        "País": "Países Bajos",
+        "Bolsa": "EURONEXT",
+        "Sector": "Transportation",
+        "Precio": 8.39,
+        "Divisa": "EUR",
+        "Mín 52s": 7.09,
+        "Máx 52s": 11.26,
+        "Rango 52s (%)": 31.18,
+        "Sobre Mín (%)": 18.34,
+        "PER": 12.42,
+        "Div (%)": 3.91,
+        "Pay-Out (%)": 48.84,
+        "ROE (%)": 31.82,
+        "ROA (%)": 18.11,
+        "Deuda/Patrim.": 0.0
+      },
+      {
         "Ticker": "CRA1",
         "Empresa": "Rio Tinto Limited",
         "País": "Suiza",
@@ -174,25 +193,6 @@
         "ROE (%)": 17.31,
         "ROA (%)": 10.92,
         "Deuda/Patrim.": 0.0
-      },
-      {
-        "Ticker": "0M2Z",
-        "Empresa": "Equinor ASA",
-        "País": "Reino Unido",
-        "Bolsa": "LSIN",
-        "Sector": "Energy Minerals",
-        "Precio": 383.35,
-        "Divisa": "NOK",
-        "Mín 52s": 226.3,
-        "Máx 52s": 454.5,
-        "Rango 52s (%)": 68.82,
-        "Sobre Mín (%)": 69.4,
-        "PER": 8.29,
-        "Div (%)": 3.74,
-        "Pay-Out (%)": 31.97,
-        "ROE (%)": 27.15,
-        "ROA (%)": 8.19,
-        "Deuda/Patrim.": 0.01
       }
     ],
     "Asia": [
