@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion_utc": "2026-11-27 21:30 UTC",
+  "ultima_actualizacion_utc": "2026-11-27 22:57 UTC",
   "regiones": {
     "América": [
       {
@@ -138,6 +138,25 @@
         "Deuda/Patrim.": 0.01
       },
       {
+        "Ticker": "DESA",
+        "Empresa": "Desarrollos Especialos de Sistomas de Anclajo, S.A.",
+        "País": "España",
+        "Bolsa": "BME",
+        "Sector": "Producer Manufacturing",
+        "Precio": 19.5,
+        "Divisa": "EUR",
+        "Mín 52s": 16.9,
+        "Máx 52s": 28.0,
+        "Rango 52s (%)": 23.42,
+        "Sobre Mín (%)": 15.38,
+        "PER": 8.61,
+        "Div (%)": 4.67,
+        "Pay-Out (%)": 40.17,
+        "ROE (%)": 17.83,
+        "ROA (%)": 9.07,
+        "Deuda/Patrim.": 0.0
+      },
+      {
         "Ticker": "VIS",
         "Empresa": "Viscofan, S.A.",
         "País": "España",
@@ -154,25 +173,6 @@
         "Pay-Out (%)": 73.56,
         "ROE (%)": 17.31,
         "ROA (%)": 10.92,
-        "Deuda/Patrim.": 0.0
-      },
-      {
-        "Ticker": "FERGR",
-        "Empresa": "Ferrari Group PLC",
-        "País": "Países Bajos",
-        "Bolsa": "EURONEXT",
-        "Sector": "Transportation",
-        "Precio": 8.97,
-        "Divisa": "EUR",
-        "Mín 52s": 7.09,
-        "Máx 52s": 11.26,
-        "Rango 52s (%)": 45.08,
-        "Sobre Mín (%)": 26.52,
-        "PER": 13.28,
-        "Div (%)": 3.64,
-        "Pay-Out (%)": 48.84,
-        "ROE (%)": 31.82,
-        "ROA (%)": 18.11,
         "Deuda/Patrim.": 0.0
       },
       {
